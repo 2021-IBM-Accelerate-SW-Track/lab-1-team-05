@@ -1,38 +1,27 @@
-import React from 'react';
-import TodoList from './TodoList'
-import TextInput from './TextInput'
-import Title from './Title'
-import { Button, SvgIcon } from '@material-ui/core';
-import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 import './App.css';
+import { useState } from 'react';
+import TodoForm from './component/TodoForm.js';
+import Item from './component/Item.js';
 
 function App() {
+
+  // Employ React hook to keep track of all to-do list items
+  let [items, setItems] = useState([]);
+
+  /* Updates list when a new task is submitted */
+  const addItem = (task) => {
+    const temp = [...items, task];
+    setItems(temp);
+  }
+
   return (
-    <div>
-      <div class="headlineHtml">
-        <Title />
-      </div>
-      
-      <div class="centered">
-        <TodoList />
-        <TextInput ></TextInput>
-        <Button variant="contained" size="large" color="primary">
-          <AddCircleOutlineRoundedIcon></AddCircleOutlineRoundedIcon>
-        </Button>
-      </div>
-
-       
+    <div className="App">
+      <TodoForm onSubmit={addItem} />
+      <h1>TO-DO LIST</h1>
+      {items.map((t, i) => <Item key={i} task={t} />)} 
     </div>
+  );
 
-  )
 }
 
 export default App;
-
-// import AddIcon from '@material-ui/icons/Add';
-
-// style={{
-//   display: "flex",
-//   justifyContent: "center",
-//   alignItems: "center"
-// }}
