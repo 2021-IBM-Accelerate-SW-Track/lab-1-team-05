@@ -26,8 +26,21 @@ code {
 /***************************************************/
 
 .todo-item {
-  border: 1px solid red; /* for reference only, can delete */
+  /* border: 1px solid red;  */
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.checkBox_item{
+  justify-content: left !important;
+}
+
+.box_item{
+  border: 1px black;
+  padding: 2px;
+}
+
+.header{
+  margin-top: 1rem !important;
 }

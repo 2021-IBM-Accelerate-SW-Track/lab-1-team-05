@@ -10,14 +10,22 @@ function App() {
 
   /* Updates list when a new task is submitted */
   const addItem = (task) => {
-    const temp = [...items, task];
-    setItems(temp);
+    let flag = false;
+    for(let i = 0; i<items.length; i++){
+      if(items[i].text === task.text){
+        flag = true;
+      }
+    }
+    if(!flag){
+      const temp = [...items, task];
+      setItems(temp);
+    }
   }
 
   return (
     <div className="App">
+      <h1 className="header">TO-DO LIST</h1>
       <TodoForm onSubmit={addItem} />
-      <h1>TO-DO LIST</h1>
       {items.map((t, i) => <Item key={i} task={t} />)}
     </div>
   );

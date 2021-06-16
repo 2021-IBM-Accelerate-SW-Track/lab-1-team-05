@@ -1,9 +1,15 @@
 import {useState} from 'react';
+import TextField from '@material-ui/core/TextField';
+import { styled } from "@material-ui/core/styles";
+import { spacing } from "@material-ui/system";
+import MuiButton from '@material-ui/core/Button';
 
 // An edit form for creating a new task, to be added to the list
 export default function TodoForm(props) {
 
-    let [val, setVal] = useState("");
+    const [val, setVal] = useState("");
+    const Button = styled(MuiButton)(spacing);
+
 
     /* Updates the UI text as a user types */
     const handleTextChange = (e) => {
@@ -11,7 +17,7 @@ export default function TodoForm(props) {
         e.preventDefault();
         setVal(e.target.value);
     }
-    
+       
     /* "Saves" user text input and clears the field */
     const handleSubmitButton = (e) => {
         e.preventDefault();
@@ -39,8 +45,25 @@ export default function TodoForm(props) {
 
     return (
         <form onSubmit={handleSubmitButton}>
-            <input type="text" name="todo-input" placeholder="Create a new task." value={val} onChange={handleTextChange} />
-            <button type="submit">+</button>
+            {/* <input type="text" name="todo-input" placeholder="Create a new task." value={val} onChange={handleTextChange} /> */}
+            <TextField
+                required
+                style={{ margin: 15 }}
+                placeholder="create a new task" 
+                onChange = {handleTextChange}
+                name = "todo-input"
+                value = {val}
+                variant = "outlined"
+                color = "primary"
+            />
+            {/* <button type="submit" >add item</button> */}
+            <Button 
+                variant="contained" 
+                type = 'submit'
+                mt = {3}
+            >
+            add item
+            </Button>
         </form>
     );
     
