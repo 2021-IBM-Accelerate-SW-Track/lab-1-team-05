@@ -23,11 +23,15 @@ function App() {
     }
   }
 
+  const updateList = (list) =>{
+    setItems(list);
+  }
+
   return (
     <div className="App">
       <h1 className="header">TO-DO LIST</h1>
-      <TodoForm onSubmit={addItem} />
-      {items.map((t, i) => <Item key={i} task={t} />)}
+      <TodoForm onSubmit={addItem}/>
+      {items.map((t, i) => <Item key={i} task={t} listItems={items} updateList={updateList}/>)}
     </div>
   );
 

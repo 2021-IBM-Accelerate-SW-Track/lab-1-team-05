@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import Button from '@material-ui/core/Button';
 import Checkbox from '@material-ui/core/Checkbox';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -26,17 +26,20 @@ const useStyles = makeStyles((theme) =>({
 
 // A single to-do item
 export default function Item(props) {
-    const [checked, setChecked] = useState(props.task.done);
+    const [checked, setChecked] = useState(false);
     const classes = useStyles();
-    const theme = useTheme();
+    // console.log(checked)
+    // console.log(props.task.done)
 
     
     const handleCheckChange = (e) => {
         setChecked(e.target.checked);
-        props.task.done = checked;
-    };
+        let mapped = props.listItems.map(item => {
+            return item.id === props.task.id ? { ...item, done: !item.done } : { ...item};
+        });
+        props.updateList(mapped);
 
-    
+    };
 
     // Recommendation to change "Edit" and "Delete" to respective icons later
     return (
@@ -44,17 +47,13 @@ export default function Item(props) {
             <Card className={classes.root} variant="outlined">
                 <CardContent className={classes.content}>
                     <Checkbox
-                        className="checkBox_item" 
+                        className="checkBox_item"
                         checked={checked}
                         onChange={handleCheckChange}
-                        inputProps={{ 'aria-label': 'primary checkbox' }}
                     />
-                    {/* <Typography variant="body2" component="p"> */}
                     <span>{props.task.text}</span>
-                    {/* </Typography> */}
                 </CardContent>
                 <CardActions>
-                    {/* <p>Date: {props.task.created}</p> */}
                     <Button size="small" variant="outlined" color="primary">Edit</Button>
                     <Button size="small" variant="outlined" color="secondary">Delete</Button>
                     <Box border={1} p='5px' borderColor="text.primary" borderRadius="borderRadius">Date: {props.task.created}</Box>
