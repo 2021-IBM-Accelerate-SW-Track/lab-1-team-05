@@ -23,11 +23,18 @@ function App() {
     }
   }
 
+  const deleteHandler = (id) => {
+    const result = items.filter(item=> id !== item.id);
+    setItems(result);
+ };
+
+
   return (
     <div className="App">
       <h1 className="header">TO-DO LIST</h1>
       <TodoForm onSubmit={addItem} />
-      {items.map((t, i) => <Item key={i} task={t} />)}
+      {items.map((t, i) => <Item key={i} task={t} onDelete = {deleteHandler} />)}
+      
     </div>
   );
 

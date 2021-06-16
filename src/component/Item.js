@@ -6,6 +6,8 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
+import { findAllInRenderedTree } from 'react-dom/test-utils';
+
 
 const useStyles = makeStyles((theme) =>({
     root: {
@@ -36,8 +38,6 @@ export default function Item(props) {
         props.task.done = checked;
     };
 
-    
-
     // Recommendation to change "Edit" and "Delete" to respective icons later
     return (
         <div className="todo-item">
@@ -56,7 +56,7 @@ export default function Item(props) {
                 <CardActions>
                     {/* <p>Date: {props.task.created}</p> */}
                     <Button size="small" variant="outlined" color="primary">Edit</Button>
-                    <Button size="small" variant="outlined" color="secondary">Delete</Button>
+                    <Button onClick={() => props.onDelete(props.task.id)} size="small" variant="outlined" color="secondary">Delete</Button>
                     <Box border={1} p='5px' borderColor="text.primary" borderRadius="borderRadius">Date: {props.task.created}</Box>
                 </CardActions>
             </Card>
