@@ -14,6 +14,7 @@ function App() {
     for(let i = 0; i<items.length; i++){
       if(items[i].text === task.text){
         flag = true;
+        break;
       }
     }
     if(!flag){
