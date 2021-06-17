@@ -10,7 +10,6 @@ export default function TodoForm(props) {
     const [val, setVal] = useState("");
     const Button = styled(MuiButton)(spacing);
 
-
     /* Updates the UI text as a user types */
     const handleTextChange = (e) => {
         // Best practice for handling events, stops any default actions from occurring in browser
@@ -45,7 +44,6 @@ export default function TodoForm(props) {
 
     return (
         <form onSubmit={handleSubmitButton}>
-            {/* <input type="text" name="todo-input" placeholder="Create a new task." value={val} onChange={handleTextChange} /> */}
             <TextField
                 required
                 style={{ margin: 15 }}
@@ -56,7 +54,6 @@ export default function TodoForm(props) {
                 variant = "outlined"
                 color = "primary"
             />
-            {/* <button type="submit" >add item</button> */}
             <Button 
                 variant="contained" 
                 type = 'submit'
