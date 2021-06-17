@@ -6,6 +6,8 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
+import { findAllInRenderedTree } from 'react-dom/test-utils';
+
 
 const useStyles = makeStyles((theme) =>({
     root: {
@@ -38,8 +40,8 @@ export default function Item(props) {
             return item.id === props.task.id ? { ...item, done: !item.done } : { ...item};
         });
         props.updateList(mapped);
-
     };
+
 
     // Recommendation to change "Edit" and "Delete" to respective icons later
     return (
@@ -55,7 +57,7 @@ export default function Item(props) {
                 </CardContent>
                 <CardActions>
                     <Button size="small" variant="outlined" color="primary">Edit</Button>
-                    <Button size="small" variant="outlined" color="secondary">Delete</Button>
+                    <Button onClick={() => props.onDelete(props.task.id)} size="small" variant="outlined" color="secondary">Delete</Button>
                     <Box border={1} p='5px' borderColor="text.primary" borderRadius="borderRadius">Date: {props.task.created}</Box>
                 </CardActions>
             </Card>
