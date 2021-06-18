@@ -15,7 +15,10 @@ function App() {
       if(items[i].text === task.text){
         flag = true;
         break;
-      }
+      } else if (task.text.match("^\\s+$")) {
+        flag = true;
+        break;
+}
     }
     if(!flag){
       const temp = [...items, task];
