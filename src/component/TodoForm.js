@@ -12,7 +12,6 @@ export default function TodoForm(props) {
 
     /* Updates the UI text as a user types */
     const handleTextChange = (e) => {
-        // Best practice for handling events, stops any default actions from occurring in browser
         e.preventDefault();
         setVal(e.target.value);
     }
@@ -21,7 +20,10 @@ export default function TodoForm(props) {
     const handleSubmitButton = (e) => {
         e.preventDefault();
 
-        // VALIDATE USER TEXT HERE (recommend case-insensitive)
+        // Field does not allow inputs that only consist of spaces
+        if (val.match("^\\s+$")) {
+            return;
+        }
 
         const newTask = {
             id: new Date().getTime(), // ensures unique ID
@@ -48,18 +50,18 @@ export default function TodoForm(props) {
                 required
                 style={{ margin: 15 }}
                 placeholder="create a new task" 
-                onChange = {handleTextChange}
-                name = "todo-input"
-                value = {val}
-                variant = "outlined"
-                color = "primary"
+                onChange={handleTextChange}
+                name="todo-input"
+                value={val}
+                variant="outlined"
+                color="primary"
             />
             <Button 
                 variant="contained" 
-                type = 'submit'
-                mt = {3}
+                type="submit"
+                mt={3}
             >
-            add item
+                ADD ITEM
             </Button>
         </form>
     );

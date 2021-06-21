@@ -7,9 +7,11 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 
+
 const useStyles = makeStyles((theme) =>({
     root: {
-      minWidth: 500,
+      width: 600,
+      height: 125,
       marginBottom: '1rem',
     },
     title: {
@@ -26,20 +28,29 @@ const useStyles = makeStyles((theme) =>({
 
 // A single to-do item
 export default function Item(props) {
-    const [checked, setChecked] = useState(false);
+    let [checked, setChecked] = useState(false);
     const classes = useStyles();
-    // console.log(checked)
-    // console.log(props.task.done)
-
-    
+ 
+    /* Checkbox click handler */
     const handleCheckChange = (e) => {
         setChecked(e.target.checked);
         let mapped = props.listItems.map(item => {
             return item.id === props.task.id ? { ...item, done: !item.done } : { ...item};
         });
-        props.updateList(mapped);
+        props.onUpdate(mapped);
 
     };
+
+    /* Delete button click handler */
+    const handleDeleteButton = (e) => {
+        e.preventDefault();
+        props.onDelete(props.task.id);
+    }
+
+    const handleEditButton = (e) => {
+        e.preventDefault();
+        props.onEdit(props.task.text);
+    }
 
     // Recommendation to change "Edit" and "Delete" to respective icons later
     return (
@@ -54,9 +65,9 @@ export default function Item(props) {
                     <span>{props.task.text}</span>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" variant="outlined" color="primary">Edit</Button>
-                    <Button size="small" variant="outlined" color="secondary">Delete</Button>
-                    <Box border={1} p='5px' borderColor="text.primary" borderRadius="borderRadius">Date: {props.task.created}</Box>
+                    <Button size="small" variant="outlined" color="primary" onClick={handleEditButton}>Edit</Button>
+                    <Button size="small" variant="outlined" color="secondary" onClick={handleDeleteButton}>Delete</Button>
+                    <Box>Created: {props.task.created}</Box>
                 </CardActions>
             </Card>
         </div>
