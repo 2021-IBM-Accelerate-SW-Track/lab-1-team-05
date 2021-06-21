@@ -6,6 +6,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
+import SimpleModal from './SimpleModal';
 
 const useStyles = makeStyles((theme) =>({
     root: {
@@ -41,6 +42,10 @@ export default function Item(props) {
 
     };
 
+    const handleEdit = (i) => {
+        SimpleModal();
+    }
+
     // Recommendation to change "Edit" and "Delete" to respective icons later
     return (
         <div className="todo-item">
@@ -54,7 +59,7 @@ export default function Item(props) {
                     <span>{props.task.text}</span>
                 </CardContent>
                 <CardActions>
-                    <Button size="small" variant="outlined" color="primary">Edit</Button>
+                    <Button size="small" variant="outlined" color="primary" onClick={handleEdit}> Edit</Button>
                     <Button size="small" variant="outlined" color="secondary">Delete</Button>
                     <Box border={1} p='5px' borderColor="text.primary" borderRadius="borderRadius">Date: {props.task.created}</Box>
                 </CardActions>
