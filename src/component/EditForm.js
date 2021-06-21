@@ -1,7 +1,4 @@
-import {useState} from 'react';
-import TextField from '@material-ui/core/TextField';
-import { styled } from "@material-ui/core/styles";
-import { spacing } from "@material-ui/system";
+import {useState, useRef, useEffect} from 'react';
 import { Dialog, DialogContent } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -20,7 +17,10 @@ const useStyles = makeStyles(theme => ({
 // An edit form for creating a new task, to be added to the list
 export default function EditForm(props) {
 
-    const [val, setVal] = useState(props.item);
+    const [val, setVal] = useState(props.item.text);
+    const inputRef = useRef(null);
+
+    const [message, setMessage] = useState("");
 
     /* Updates the UI text as a user types */
     const handleTextChange = (e) => {
@@ -28,10 +28,28 @@ export default function EditForm(props) {
         setVal(e.target.value);
     }
 
-    /* "Saves" user text input and closes the popup */
+    /* Validates and saves user text input and closes the popup */
     const handleUpdateButton = (e) => {
         e.preventDefault();
+        if (!val) {
+            props.setOpenPopup(false);
+            return;
+        }
 
+        if (val.match("^\\s+$")) {
+            setMessage("Item must contain text.");
+            return;
+        }
+
+        const updated = {
+            id: props.item.id,
+            text: val,
+            done: props.item.done,
+            created: props.item.created
+        }
+
+        props.setOpenPopup(false);
+        props.onUpdate(updated);
     }
 
     /* Closes the popup without saving changes */
@@ -44,14 +62,12 @@ export default function EditForm(props) {
         <Dialog open={props.openPopup}>
             <DialogContent>
                 <form>
-                    <TextField
-                        required
-                        style={{ margin: 15 }}
-                        onChange={handleTextChange}
-                        name="todo-input"
+                    <input
                         value={val}
-                        variant="outlined"
-                        color="primary"
+                        defaultValue={props.item.text}
+                        onChange={handleTextChange}
+                        name="todo-edit"
+                        ref={inputRef.current}
                     />
                     <Button
                         variant="contained"
@@ -68,6 +84,7 @@ export default function EditForm(props) {
                         CANCEL
                     </Button>
                 </form>
+                <p>{message}</p>
             </DialogContent>
         </Dialog>
     );

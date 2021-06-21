@@ -47,9 +47,10 @@ export default function Item(props) {
         props.onDelete(props.task.id);
     }
 
+    /* Edit button click handler */
     const handleEditButton = (e) => {
         e.preventDefault();
-        props.onEdit(props.task.text);
+        props.onEdit(props.task);
     }
 
     // Recommendation to change "Edit" and "Delete" to respective icons later

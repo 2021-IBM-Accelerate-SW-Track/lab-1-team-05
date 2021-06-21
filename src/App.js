@@ -6,11 +6,11 @@ import EditForm from './component/EditForm.js';
 
 function App() {
 
-  const [items, setItems] = useState([]);
-  const [openPopup, setOpenPopup] = useState(false);
-  const [popupText, setPopupText] = useState("");
+  const [items, setItems] = useState([]); // list of all task items
+  const [openPopup, setOpenPopup] = useState(false); // for showing edit form popup
+  const [focus, setFocus] = useState({}); // denotes specific item to focus on for edit form
 
-  /* Updates list when a new task is submitted */
+  /* Validates duplicates and updates list when a new task is submitted */
   const addItem = (task) => {
     let flag = false;
     let lowercase = task.text.toLowerCase();
@@ -34,15 +34,26 @@ function App() {
     setItems(temp);
   }
 
-  /* Updates list */
+  /* Updates items list, given a new list */
   const updateList = (list) => {
     setItems(list);
   }
 
+  /* Updates list when an existing task is edited */
+  const editItem = (task) => {
+    const idx = items.findIndex((t) => t.id === task.id);
+    let temp = [...items];
+    temp[idx].text = task.text;
+    setItems(temp);
+  }
+
   /* Shows the dialog popup box for the edit form */
-  const showPopup = (text) => {
+  const showPopup = (task) => {
     setOpenPopup(true);
-    setPopupText(text);
+    setFocus({
+      id: task.id,
+      text: task.text,
+    });
   }
 
   return (
@@ -50,8 +61,7 @@ function App() {
       <h1 className="header">TO-DO LIST</h1>
       <TodoForm onSubmit={addItem} />
       {items.map((t, i) => <Item key={i} task={t} listItems={items} onUpdate={updateList} onDelete={deleteItem} onEdit={showPopup}/>)}
-      {console.log(popupText)}
-      <EditForm openPopup={openPopup} setOpenPopup={setOpenPopup} item={popupText}/>
+      <EditForm openPopup={openPopup} setOpenPopup={setOpenPopup} item={focus} onUpdate={editItem}/>
     </div>
   );
 

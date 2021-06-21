@@ -46,7 +46,7 @@ export default function TodoForm(props) {
 
     return (
         <form onSubmit={handleSubmitButton}>
-            <TextField
+            <TextField data-testid="new-item-input"
                 required
                 style={{ margin: 15 }}
                 placeholder="create a new task" 
@@ -56,7 +56,7 @@ export default function TodoForm(props) {
                 variant="outlined"
                 color="primary"
             />
-            <Button 
+            <Button data-testid="new-item-button"
                 variant="contained" 
                 type="submit"
                 mt={3}
