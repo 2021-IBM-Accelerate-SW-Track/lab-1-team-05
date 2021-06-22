@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-.App {
+.app {
   text-align: center;
 }
 
@@ -18,29 +18,44 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.header {
+  margin-top: 1rem !important;
 }
 
 /***************************************************/
 
 .todo-item {
-  /* border: 1px solid red;  */
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.checkBox_item{
+.edit-input {
+  width: 500px;
+  height: 30px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.edit-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.checkbox-item {
   justify-content: left !important;
 }
 
-.box_item{
-  border: 1px black;
-  padding: 2px;
+.box-item {
+  color: #404040;
+  font-size: .9rem;
+  padding-bottom: 6px;
 }
 
-.header{
-  margin-top: 1rem !important;
+.error-message {
+  color: red;
+  height: 15px;
+  margin: 0px auto 10px 5px;
+  font-size: small;
 }
