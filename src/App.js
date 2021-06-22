@@ -5,33 +5,37 @@ import Item from './component/Item.js';
 
 function App() {
 
-  // Employ React hook to keep track of all to-do list items
-  let [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
 
-  /* Updates list when a new task is submitted */
+  /**
+   * Validates duplicates and updates list when a new task is submitted
+   * Returns boolean value to indicate success
+   */
   const addItem = (task) => {
-    let flag = false;
-    for(let i = 0; i<items.length; i++){
-      if(items[i].text === task.text){
-        flag = true;
-        break;
+    let lowercase = task.text.toLowerCase();
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].text.toLowerCase() === lowercase) {
+        return false;
       }
     }
-    if(!flag){
-      const temp = [...items, task];
-      setItems(temp);
-    }
+
+    const temp = [...items, task];
+    setItems(temp);
+    return true;
   }
 
-  const updateList = (list) =>{
+  /* Updates items list, given a new list */
+  const updateList = (list) => {
     setItems(list);
   }
 
   return (
-    <div className="App">
+    <div className="app">
       <h1 className="header">TO-DO LIST</h1>
-      <TodoForm onSubmit={addItem}/>
-      {items.map((t, i) => <Item key={i} task={t} listItems={items} updateList={updateList}/>)}
+      <TodoForm onSubmit={addItem} />
+      {items.map((t, i) => 
+        <Item key={i} task={t} listItems={items} update={updateList} />)}
     </div>
   );
 

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import TextField from '@material-ui/core/TextField';
 import { styled } from "@material-ui/core/styles";
 import { spacing } from "@material-ui/system";
@@ -8,20 +8,30 @@ import MuiButton from '@material-ui/core/Button';
 export default function TodoForm(props) {
 
     const [val, setVal] = useState("");
+    const [message, setMessage] = useState("");
     const Button = styled(MuiButton)(spacing);
 
     /* Updates the UI text as a user types */
     const handleTextChange = (e) => {
-        // Best practice for handling events, stops any default actions from occurring in browser
         e.preventDefault();
+        if (e.target.value.length > 70) {
+            return;
+        } else if (e.target.value.length === 70) {
+            setMessage("Maximum character limit reached.")
+        } else {
+            setMessage("");
+        }
         setVal(e.target.value);
     }
-       
-    /* "Saves" user text input and clears the field */
+    
+    /* validates and saves user text input and clears the field */
     const handleSubmitButton = (e) => {
         e.preventDefault();
 
-        // VALIDATE USER TEXT HERE (recommend case-insensitive)
+        if (val.match("^\\s+$")) {
+            setMessage(`No "empty" text allowed.`);
+            return;
+        }
 
         const newTask = {
             id: new Date().getTime(), // ensures unique ID
@@ -30,8 +40,12 @@ export default function TodoForm(props) {
             created: getFormattedDate(),
         }
 
-        props.onSubmit(newTask);
-        setVal("");
+        if (props.onSubmit(newTask)) {
+            setVal("");
+            setMessage("");
+        } else {
+            setMessage("Duplicate task detected (case-insensitive). Try again.");
+        }
     }
 
     /* Gives current date and time formatted as MM/DD/YYYY, 00:00:00 */
@@ -44,23 +58,28 @@ export default function TodoForm(props) {
 
     return (
         <form onSubmit={handleSubmitButton}>
-            <TextField
+            <TextField data-testid="new-item-input"
                 required
                 style={{ margin: 15 }}
                 placeholder="create a new task" 
-                onChange = {handleTextChange}
-                name = "todo-input"
-                value = {val}
-                variant = "outlined"
-                color = "primary"
+                onChange={handleTextChange}
+                name="todo-input"
+                value={val}
+                variant="outlined"
+                color="secondary"
+                ng-trim="false"
             />
-            <Button 
-                variant="contained" 
-                type = 'submit'
-                mt = {3}
+            <Button data-testid="new-item-button"
+                variant="contained"
+                color="primary"
+                disableElevation
+                type="submit"
+                mt={3}
             >
-            add item
+                + ADD ITEM
             </Button>
+            <p className="error-message">{message}</p>
+            <br/>
         </form>
     );
     
